@@ -1,0 +1,16 @@
+.navbar-brand {
+    color: #6b3a1f !important;
+    font-weight: 700;
+}
+
+.nav-link {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #444 !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--cafe-gold) !important;
+}

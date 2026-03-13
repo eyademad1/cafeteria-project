@@ -1,0 +1,13 @@
+:root {
+    --cafe-gold: #c8813a;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}

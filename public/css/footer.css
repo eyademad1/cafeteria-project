@@ -1,0 +1,16 @@
+footer {
+    background: #1a0a00;
+    color: #9e8672;
+}
+
+footer a {
+    color: #9e8672;
+}
+
+footer a:hover {
+    color: #c8813a;
+}
+
+footer hr {
+    border-color: #3a2010;
+}
