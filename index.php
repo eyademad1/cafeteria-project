@@ -25,7 +25,7 @@ switch ($page) {
     case 'admin':
         include __DIR__ . "/views/admin/dashboard.php";
         break;
-    case 'cart':
+    case 'my-orders':
         include __DIR__ . "/views/cart/myOrder.php";
         break;    
     default:
