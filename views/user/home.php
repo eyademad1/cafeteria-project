@@ -1,9 +1,13 @@
 <?php
 include __DIR__ . "/../layouts/header.php";
+require_once "./controllers/orderController.php";
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?page=login");
     exit;
 }
+
+$orderController = new orderController($connection);
+$products = $orderController->index();
 ?>
 
 <main class="main-content">
@@ -58,24 +62,43 @@ if (!isset($_SESSION['user_id'])) {
                         <h3>Latest Order</h3>
                         <span class="banner-time" id="banner-time"></span>
                     </div>
-                    <div class="banner-details"
-                             id="banner-details">
-                        </div>
-
-
+                    <div class="banner-details" id="banner-details">
+                    </div>
                 </div>
+                <div class="product-grid" id="product-grid">
+                <?php if(empty($products)):?>
+                    <div class="empty-state">
+                        <i class="fas fa-coffee"></i>
+                        <p>No products available</p>
+                    </div>
+                    <?php else:?>
+                    <?php foreach($products as $product):?>
+                        <div class="product-card" data-id="<?php echo $product['id']?>" data-name="<?php echo $product['name']?>" data-price="<?php echo $product['price']?>">
+                            <div class="product-image">
+                                <img src="<?= htmlspecialchars($product['image'] ? 'public/images/' . $product['image'] : 'public/images/default.jpg') ?>" alt="<?= htmlspecialchars($product['name']) ?>">
+                            </div>
+                            <div class="product-info">
+                                <h3><?= htmlspecialchars($product['name']) ?></h3>
+                                <p class="product-price"><?= htmlspecialchars($product['price']) ?> EGP</p>
+                            </div>
+                            <button class="btn-add-to-cart">
+                                <i class="fas fa-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    <?php endforeach;?>
+                <?php endif;?>
+             
             </div>
         </div>
     </div>
 </main>
 
 <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toast-message">Added successfully</span>
-    </div>
-
-    <script src="app.js"></script>
+<div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Added successfully</span>
+</div>
+<script src="public/js/home.js"></script>
 
 <?php
 include __DIR__ . "/../layouts/footer.php";
