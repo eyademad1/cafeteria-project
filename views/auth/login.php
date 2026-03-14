@@ -4,30 +4,45 @@ include __DIR__ . "/../layouts/header.php";
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email    = $_POST['email'];
+
+    $email    = trim($_POST['email']);
     $password = $_POST['password'];
 
-    $stmt = $connection->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && $user['password'] === $password) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['name']    = $user['name'];
-        $_SESSION['role']    = $user['role']; 
-
-        if ($user['role'] === 'admin') {
-        header("Location: index.php?page=admin");
-    } else {
-        header("Location: index.php?page=home");
+    if (empty($email) || empty($password)) {
+        $error = "Email and Password are required";
     }
-        exit;
-    } else {
-        $error = "Invalid Email or Password";
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Invalid email format";
+    }
+    else {
+
+        $stmt = $connection->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['password'])) {
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['name']    = $user['name'];
+            $_SESSION['role']    = $user['role'];
+
+            if ($user['role'] === 'admin') {
+                header("Location: index.php?page=admin");
+            } else {
+                header("Location: index.php?page=home");
+            }
+
+            exit;
+
+        } else {
+            $error = "Invalid Email or Password";
+        }
     }
 }
 ?>
+
 
 <div class="row justify-content-center">
     <div class="col-md-4">
@@ -46,6 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button class="btn w-100" style="background:#c8813a; color:#fff;">Login</button>
         </form>
+
+        <p class="text-center mt-2 small">
+            <a href="index.php?page=forget_password">Forget Password?</a>
+        </p>
 
         <p class="text-center mt-3 small">
             Don't have an account? <a href="index.php?page=register" style="color:#c8813a;">Register</a>

@@ -16,6 +16,9 @@ switch ($page) {
     case 'register':
         include __DIR__ . "/views/auth/register.php";
         break;
+    case 'forget_password':
+        include __DIR__ . "/views/auth/forget_password.php";
+        break;    
     case 'home':
         include __DIR__ . "/views/user/home.php";
         break;

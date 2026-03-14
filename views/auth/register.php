@@ -5,23 +5,53 @@ $error   = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name     = $_POST['name'];
-    $email    = $_POST['email'];
+
+    $name     = trim($_POST['name']);
+    $email    = trim($_POST['email']);
     $password = $_POST['password'];
+    $confirm  = $_POST['confirm_password'];
 
-    $stmt = $connection->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
+    if (empty($name) || empty($email) || empty($password)) {
+        $error = "All fields are required";
+    }
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Invalid email format";
+    }
+    elseif (strlen($password) < 6) {
+        $error = "Password must be at least 6 characters";
+    }
+    elseif ($password !== $confirm) {
+    $error = "Passwords do not match";
+    }
+    else {
 
-    if ($stmt->fetch()) {
-        $error = "Email already exists";
-    } else {
-        $stmt = $connection->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
-        $stmt->execute([':name' => $name, ':email' => $email, ':password' => $password]);
-        $success = "Registration successful. You can now login.";
+        $stmt = $connection->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        if ($stmt->fetch()) {
+            $error = "Email already exists";
+        } else {
+
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            $stmt = $connection->prepare("
+                INSERT INTO users (name, email, password)
+                VALUES (:name, :email, :password)
+            ");
+
+            $stmt->execute([
+                ':name' => $name,
+                ':email' => $email,
+                ':password' => $hashedPassword
+            ]);
+
+            $success = "Registration successful. You can now login.";
+        }
     }
 }
 ?>
+
 
 <div class="row justify-content-center">
     <div class="col-md-4">
@@ -44,6 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mb-3">
                 <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
             </div>
             <button class="btn w-100" style="background:#c8813a; color:#fff;">Register</button>
         </form>
