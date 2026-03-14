@@ -28,6 +28,20 @@ switch ($page) {
     case 'my-orders':
         include __DIR__ . "/views/cart/myOrder.php";
         break;    
+    case 'checkout':
+        require_once __DIR__ . "/controllers/orderController.php";
+        $orderController = new orderController($connection);
+        
+        $data = json_decode(file_get_contents('php://input'), true);
+        if ($data) {
+            // we assume the logged in user id is in the session, if not fallback to 1 as placeholder
+            $userId = $_SESSION['user_id'] ?? 1;
+            $data['user_id'] = $userId;
+            $result = $orderController->saveOrder($data);
+            header("Content-Type: application/json");
+            echo json_encode(['success' => $result]);
+        }
+        exit;
     default:
         include __DIR__ . "/views/auth/login.php";
 }

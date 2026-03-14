@@ -6,39 +6,15 @@
     <title>Cafeteria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="public/css/header.css">
     <link rel="stylesheet" href="public/css/footer.css">
-    <style>
-
-.role-badge {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 2px 8px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-.role-badge.admin {
-  background: #6b3a1f;
-  color: #fff;
-}
-.role-badge.user {
-  background: #f3e0cc;
-  color: #6b3a1f;
-}
-.nav-user-name {
-  font-weight: 500;
-  color: #3d2b1a;
-}
-.navbar .nav-link {
-  transition: color 0.15s;
-}
-.navbar .nav-link:hover {
-  color: #c8813a !important;
-}
-    </style>
+    <link rel="stylesheet" href="public/css/home.css">
 </head>
 <body>
 
