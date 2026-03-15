@@ -81,7 +81,7 @@ $products = $orderController->index();
                                 <h3><?= htmlspecialchars($product['name']) ?></h3>
                                 <p class="product-price"><?= htmlspecialchars($product['price']) ?> EGP</p>
                             </div>
-                            <button class="btn-add-to-cart">
+                            <button class="btn-add-to-cart ">
                                 <i class="fas fa-plus"></i> Add to Cart
                             </button>
                         </div>
