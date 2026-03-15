@@ -8,6 +8,10 @@ if (!isset($_SESSION['user_id'])) {
 
 $orderController = new orderController($connection);
 $products = $orderController->index();
+
+$roomStmt = $connection->prepare("SELECT id, room_number FROM rooms ORDER BY room_number ASC");
+$roomStmt->execute();
+$rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <main class="main-content">
@@ -35,11 +39,9 @@ $products = $orderController->index();
                     </label>
                     <select name="" id="room-select">
                         <option value="">Select Room</option>
-                        <option value="101">Room 101</option>
-                        <option value="102">Room 102</option>
-                        <option value="103">Room 103</option>
-                        <option value="104">Room 104</option>
-                        <option value="Meeting Room">Meeting Room</option>
+                        <?php foreach ($rooms as $room): ?>
+                            <option value="<?= (int) $room['id'] ?>"><?= htmlspecialchars($room['room_number']) ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="order-total">

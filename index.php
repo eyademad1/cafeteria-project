@@ -10,7 +10,13 @@ if ($page === 'logout') {
 }
 
 
-$noOutputPages = ['admin_products_delete', 'admin_products_toggle', 'admin_users_delete'];
+$noOutputPages = [
+    'admin_products_delete',
+    'admin_products_toggle',
+    'admin_users_delete',
+    'admin_categories_delete',
+    'admin_rooms_delete'
+];
 if (in_array($page, $noOutputPages)) {
     if (strpos($page, 'admin_products_') === 0) {
         $subPage = str_replace('admin_products_', '', $page);
@@ -18,6 +24,12 @@ if (in_array($page, $noOutputPages)) {
     } elseif (strpos($page, 'admin_users_') === 0) {
         $subPage = str_replace('admin_users_', '', $page);
         include __DIR__ . "/views/admin/users/{$subPage}.php";
+    } elseif (strpos($page, 'admin_categories_') === 0) {
+        $subPage = str_replace('admin_categories_', '', $page);
+        include __DIR__ . "/views/admin/categories/{$subPage}.php";
+    } elseif (strpos($page, 'admin_rooms_') === 0) {
+        $subPage = str_replace('admin_rooms_', '', $page);
+        include __DIR__ . "/views/admin/rooms/{$subPage}.php";
     }
     exit;
 }
@@ -48,8 +60,26 @@ switch ($page) {
     case 'admin_products_edit':
         include __DIR__ . "/views/admin/products/edit.php";
         break;
+    case 'admin_categories':
+        include __DIR__ . "/views/admin/categories/index.php";
+        break;
+    case 'admin_categories_add':
+        include __DIR__ . "/views/admin/categories/add.php";
+        break;
+    case 'admin_categories_edit':
+        include __DIR__ . "/views/admin/categories/edit.php";
+        break;
     case 'admin_add_category':
         include __DIR__ . "/views/admin/products/add_category.php";
+        break;
+    case 'admin_rooms':
+        include __DIR__ . "/views/admin/rooms/index.php";
+        break;
+    case 'admin_rooms_add':
+        include __DIR__ . "/views/admin/rooms/add.php";
+        break;
+    case 'admin_rooms_edit':
+        include __DIR__ . "/views/admin/rooms/edit.php";
         break;
     case 'admin_users':
         include __DIR__ . "/views/admin/users/index.php";

@@ -55,6 +55,16 @@ $isAdmin    = $role === 'admin';
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=admin_categories">
+                            <i class="fas fa-tags fa-sm me-1 opacity-75"></i>Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=admin_rooms">
+                            <i class="fas fa-door-open fa-sm me-1 opacity-75"></i>Rooms
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php?page=admin_users">
                             <i class="fas fa-users fa-sm me-1 opacity-75"></i>Users
                         </a>
