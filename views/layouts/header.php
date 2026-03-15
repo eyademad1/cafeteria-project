@@ -50,12 +50,12 @@ $isAdmin    = $role === 'admin';
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=products">
+                        <a class="nav-link" href="index.php?page=admin_products">
                             <i class="fas fa-box fa-sm me-1 opacity-75"></i>Products
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=users">
+                        <a class="nav-link" href="index.php?page=admin_users">
                             <i class="fas fa-users fa-sm me-1 opacity-75"></i>Users
                         </a>
                     </li>
