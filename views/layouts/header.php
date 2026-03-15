@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="public/css/header.css">
     <link rel="stylesheet" href="public/css/footer.css">
-    <link rel="stylesheet" href="public/css/home.css">
+    <link rel="stylesheet" href="public/css/home.css?v=<?= filemtime(__DIR__ . '/../../public/css/home.css') ?>">
 </head>
 <body>
 

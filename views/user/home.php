@@ -9,6 +9,11 @@ if (!isset($_SESSION['user_id'])) {
 $orderController = new orderController($connection);
 $products = $orderController->index();
 
+$basePath = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+if ($basePath === '/' || $basePath === '.') {
+    $basePath = '';
+}
+
 $roomStmt = $connection->prepare("SELECT id, room_number FROM rooms ORDER BY room_number ASC");
 $roomStmt->execute();
 $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -17,11 +22,11 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
 <main class="main-content">
     <div class="page active" id="page-home">
         <div class="content-grid">
-            <aside calss="order-panel" id="order-panel">
+            <aside class="order-panel" id="order-panel">
                 <div class="panel-header">
                     <h2><i class="fas fa-shopping-cart"></i> Current Order</h2>
                 </div>
-                <div class="orders-items" id="orders-items">
+                <div class="order-items" id="order-items">
                     <div class="empty-order" id="empty-order">
                         <i class="fas fa-coffee"></i>
                         <p>Select a drink from the menu</p>
@@ -46,7 +51,7 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="order-total">
                     <span class="total-label">Total</span>
-                    <span class="total-amount">0 EGP</span>
+                    <span class="total-amount" id="total-amount">0 EGP</span>
                 </div>
 
                 <button class="btn-confirm" id="btn-confirm">
@@ -75,9 +80,22 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <?php else:?>
                     <?php foreach($products as $product):?>
+                        <?php
+                            $imageName = trim((string) ($product['image'] ?? ''));
+                            $imageSrc = $basePath . '/public/images/default-product.svg';
+                            if ($imageName !== '') {
+                                $productImageDisk = __DIR__ . '/../../public/images/products/' . $imageName;
+                                $legacyImageDisk = __DIR__ . '/../../public/images/' . $imageName;
+                                if (file_exists($productImageDisk)) {
+                                    $imageSrc = $basePath . '/public/images/products/' . $imageName;
+                                } elseif (file_exists($legacyImageDisk)) {
+                                    $imageSrc = $basePath . '/public/images/' . $imageName;
+                                }
+                            }
+                        ?>
                         <div class="product-card" data-id="<?php echo $product['id']?>" data-name="<?php echo $product['name']?>" data-price="<?php echo $product['price']?>">
                             <div class="product-image">
-                                <img src="<?= htmlspecialchars($product['image'] ? 'public/images/' . $product['image'] : 'public/images/default.jpg') ?>" alt="<?= htmlspecialchars($product['name']) ?>">
+                                <img src="<?= htmlspecialchars($imageSrc) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
                             </div>
                             <div class="product-info">
                                 <h3><?= htmlspecialchars($product['name']) ?></h3>
@@ -100,7 +118,7 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
     <i class="fas fa-check-circle"></i>
     <span id="toast-message">Added successfully</span>
 </div>
-<script src="public/js/home.js"></script>
+<script src="<?= htmlspecialchars($basePath . '/public/js/home.js?v=' . filemtime(__DIR__ . '/../../public/js/home.js')) ?>"></script>
 
 <?php
 include __DIR__ . "/../layouts/footer.php";
