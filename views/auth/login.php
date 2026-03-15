@@ -1,6 +1,4 @@
 <?php
-include __DIR__ . "/../layouts/header.php";
-
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,5 +50,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
     </div>
 </div>
-
-<?php include __DIR__ . "/../layouts/footer.php"; ?>
