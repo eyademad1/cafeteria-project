@@ -1,13 +1,6 @@
 <?php
-include __DIR__ . "/../layouts/header.php";
-
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: index.php?page=login");
-    exit;
-}
-
-if ($_SESSION['role'] !== 'admin') {
-    header("Location: index.php?page=home");
     exit;
 }
 ?>
@@ -20,5 +13,3 @@ Welcome Admin <?= htmlspecialchars($_SESSION['name']) ?>
 
 
 <a href="index.php?page=logout" class="btn btn-danger mt-4">Logout</a>
-
-<?php include __DIR__ . "/../layouts/footer.php"; ?>
