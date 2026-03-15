@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/../layouts/header.php";
+// include __DIR__ . "/../layouts/header.php";
 require_once "./controllers/orderController.php";
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?page=login");
