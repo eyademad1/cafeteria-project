@@ -12,7 +12,7 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($product) {
     // Delete image if exists
     if ($product['image']) {
-        $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/www/playground/cafeteria-project/public/images/products/' . $product['image'];
+        $imagePath = __DIR__ . '/../../../public/images/products/' . $product['image'];
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }

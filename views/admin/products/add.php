@@ -18,17 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $image = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/www/playground/cafeteria-project/public/images/products/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-        $filename = uniqid() . '_' . basename($_FILES['image']['name']);
-        $uploadFile = $uploadDir . $filename;
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
-            $image = $filename;
+        $uploadDir = __DIR__ . '/../../../public/images/products/';
+        if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
+            $errors[] = "Failed to create upload directory";
+        } elseif (!is_writable($uploadDir)) {
+            $errors[] = "Upload directory is not writable";
         } else {
-            $errors[] = "Failed to upload image";
+            $safeName = preg_replace('/[^A-Za-z0-9._-]/', '_', basename($_FILES['image']['name']));
+            $filename = uniqid() . '_' . $safeName;
+            $uploadFile = $uploadDir . $filename;
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+                $image = $filename;
+            } else {
+                $errors[] = "Failed to upload image";
+            }
         }
+    } elseif (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+        $errors[] = "Image upload error code: " . (int) $_FILES['image']['error'];
     }
 
     if (empty($errors)) {
