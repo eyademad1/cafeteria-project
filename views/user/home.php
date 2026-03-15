@@ -119,7 +119,3 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
     <span id="toast-message">Added successfully</span>
 </div>
 <script src="<?= htmlspecialchars($basePath . '/public/js/home.js?v=' . filemtime(__DIR__ . '/../../public/js/home.js')) ?>"></script>
-
-<?php
-include __DIR__ . "/../layouts/footer.php";
-?>

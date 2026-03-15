@@ -70,6 +70,11 @@ $isAdmin    = $role === 'admin';
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=my-orders">
+                            <i class="fas fa-bag-shopping fa-sm me-1 opacity-75"></i>My Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php?page=manual-order">
                             <i class="fas fa-pen-to-square fa-sm me-1 opacity-75"></i>Manual Order
                         </a>
