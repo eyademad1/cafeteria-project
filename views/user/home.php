@@ -152,7 +152,7 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
 </main>
 
 <!-- Toast Notification -->
-<div class="toast" id="toast">
+<div class="toast" id="toast" style="background-color: #28a745; color: white;">
     <i class="fas fa-check-circle"></i>
     <span id="toast-message">Added successfully</span>
 </div>
