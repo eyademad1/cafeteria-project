@@ -1,0 +1,50 @@
+cafeteria/
+│
+├── config/
+│   └── database.php          ← كونيكشن الداتابيز (إياد)
+│
+├── models/
+│   ├── User.php              ← إياد
+│   ├── Product.php           ← اسلام
+│   ├── Category.php          ← اسلام
+│   ├── Order.php             ← جندي + صفوت
+│   └── Room.php              ← إياد
+│
+├── controllers/
+│   ├── AuthController.php    ← إياد
+│   ├── UserController.php    ← اسلام
+│   ├── ProductController.php ← اسلام
+│   ├── OrderController.php   ← جندي
+│   ├── MyOrderController.php ← صفوت
+│   └── AdminController.php   ← حبسه
+│
+├── views/
+│   ├── layouts/
+│   │   ├── header.php        ← إياد (يعملها مرة واحدة للكل)
+│   │   └── footer.php        ← إياد
+│   │
+│   ├── auth/
+│   │   ├── login.php         ← إياد (Screen 1)
+│   │   └── forget_password.php ← إياد
+│   │
+│   ├── user/
+│   │   ├── home.php          ← جندي (Screen 2)
+│   │   └── my_orders.php     ← صفوت (Screen 4)
+│   │
+│   └── admin/
+│       ├── home.php          ← حبسه (Screen 10)
+│       ├── products.php      ← اسلام (Screen 5/6)
+│       ├── add_product.php   ← اسلام (Screen 8 للمنتج)
+│       ├── users.php         ← اسلام (Screen 7)
+│       ├── add_user.php      ← اسلام (Screen 8)
+│       ├── manual_order.php  ← حبسه (Screen 3)
+│       └── checks.php        ← حبسه (Screen 9)
+│
+├── public/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── uploads/             ← صور المنتجات والـ profiles
+│
+└── index.php                ← نقطة البداية (إياد)
