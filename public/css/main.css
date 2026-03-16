@@ -1,14 +1,48 @@
 :root {
     --cafe-gold: #c8813a;
+    --bs-primary: #c8813a;
+    --bs-light: #f8f9fa;
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #212529;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
     min-height: 100vh;
 }
 
 main {
     flex: 1;
+}
+
+/* Custom Bootstrap overrides for light theme */
+.bg-cafe {
+    background-color: var(--cafe-gold) !important;
+}
+
+.text-cafe {
+    color: var(--cafe-gold) !important;
+}
+
+.btn-cafe {
+    background-color: var(--cafe-gold);
+    border-color: var(--cafe-gold);
+    color: white;
+}
+
+.btn-cafe:hover {
+    background-color: #a66f2f;
+    border-color: #a66f2f;
+    color: white;
+}
+
+.card-cafe {
+    border-color: var(--cafe-gold);
+}
+
+.card-cafe .card-header {
+    background-color: #fdf6f0;
+    border-bottom-color: #f0dfc8;
 }
 

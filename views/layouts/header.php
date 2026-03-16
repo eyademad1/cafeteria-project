@@ -6,39 +6,15 @@
     <title>Cafeteria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="public/css/header.css">
     <link rel="stylesheet" href="public/css/footer.css">
-    <style>
-
-.role-badge {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 2px 8px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-.role-badge.admin {
-  background: #6b3a1f;
-  color: #fff;
-}
-.role-badge.user {
-  background: #f3e0cc;
-  color: #6b3a1f;
-}
-.nav-user-name {
-  font-weight: 500;
-  color: #3d2b1a;
-}
-.navbar .nav-link {
-  transition: color 0.15s;
-}
-.navbar .nav-link:hover {
-  color: #c8813a !important;
-}
-    </style>
+    <link rel="stylesheet" href="public/css/home.css?v=<?= filemtime(__DIR__ . '/../../public/css/home.css') ?>">
 </head>
 <body>
 
@@ -47,16 +23,27 @@
 $isLoggedIn = isset($_SESSION['user_id']);
 $role       = $_SESSION['role']  ?? '';
 $userName   = $_SESSION['name']  ?? '';
+$profilePic = $_SESSION['profile_pic'] ?? '';
 $isAdmin    = $role === 'admin';
+
+$page = $_GET['page'] ?? '';
+$isAuthPage = in_array($page, ['login', 'register', 'forget_password'], true);
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom <?= $isAuthPage ? 'py-2' : 'sticky-top' ?>">
     <div class="container">
 
         <!-- Brand -->
         <a class="navbar-brand fw-semibold" href="index.php?page=home">
             <i class="fas fa-mug-hot me-1" style="color:var(--cafe-gold, #c8813a);"></i> Cafeteria
         </a>
+
+        <?php if ($isAuthPage): ?>
+            <div class="ms-auto d-flex gap-2">
+                <a class="btn btn-sm btn-outline-secondary" href="index.php?page=login">Login</a>
+                <a class="btn btn-sm btn-cafe" href="index.php?page=register">Register</a>
+            </div>
+        <?php else: ?>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
                 aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,15 +61,30 @@ $isAdmin    = $role === 'admin';
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=products">
+                        <a class="nav-link" href="index.php?page=admin_products">
                             <i class="fas fa-box fa-sm me-1 opacity-75"></i>Products
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=users">
+                        <a class="nav-link" href="index.php?page=admin_categories">
+                            <i class="fas fa-tags fa-sm me-1 opacity-75"></i>Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=admin_rooms">
+                            <i class="fas fa-door-open fa-sm me-1 opacity-75"></i>Rooms
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=admin_users">
                             <i class="fas fa-users fa-sm me-1 opacity-75"></i>Users
                         </a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=my-orders">
+                            <i class="fas fa-bag-shopping fa-sm me-1 opacity-75"></i>My Orders
+                        </a>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=manual-order">
                             <i class="fas fa-pen-to-square fa-sm me-1 opacity-75"></i>Manual Order
@@ -130,7 +132,11 @@ $isAdmin    = $role === 'admin';
                 <?php if ($isLoggedIn): ?>
                     <!-- Name + role badge -->
                     <li class="nav-item d-flex align-items-center gap-2 me-2">
-                        <i class="fas fa-circle-user" style="color:#c8813a; font-size:1.1rem;"></i>
+                        <?php if ($profilePic): ?>
+                            <img src="public/images/users/<?= htmlspecialchars($profilePic) ?>" alt="Avatar" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
+                        <?php else: ?>
+                            <i class="fas fa-circle-user" style="color:#c8813a; font-size:1.1rem;"></i>
+                        <?php endif; ?>
                         <span class="nav-user-name small">
                             <?= htmlspecialchars($userName) ?>
                         </span>
@@ -159,6 +165,7 @@ $isAdmin    = $role === 'admin';
 
         </div>
     </div>
+    <?php endif; ?>
 </nav>
 
 <main class="container py-4">
