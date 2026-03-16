@@ -85,7 +85,6 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
                             $imageSrc = $basePath . '/public/images/default-product.svg';
                             if ($imageName !== '') {
                                 $productImageDisk = __DIR__ . '/../../public/images/products/' . $imageName;
-                                $legacyImageDisk = __DIR__ . '/../../public/images/' . $imageName;
                                 if (file_exists($productImageDisk)) {
                                     $imageSrc = $basePath . '/public/images/products/' . $imageName;
                                 } elseif (file_exists($legacyImageDisk)) {

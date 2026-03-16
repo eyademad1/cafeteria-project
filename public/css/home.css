@@ -66,11 +66,7 @@ body {
   border-radius: 3px;
 }
 
-.main-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1.5rem 2rem;
-}
+
 
 .page-active {
   display: block;
@@ -606,6 +602,44 @@ body {
   opacity: 1;
   transform: scale(1);
 }
+
+/* Add to Cart Button */
+.btn-add-to-cart {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-add-to-cart:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.btn-add-to-cart:active {
+  transform: translateY(0);
+}
+
+.btn-add-to-cart i {
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+
 
 /* ===== Toast ===== */
 .toast {

@@ -2,8 +2,8 @@
 $dbType = "mysql";
 $dbName = "cafeteria";
 $host = "localhost"; 
-$userName = "cafeteria_app";
-$password = "StrongAppPassword123!";
+$userName = "root";
+$password = "NewPassword123";
 
 try {
     $connection = new PDO("$dbType:host=$host;dbname=$dbName;charset=utf8", $userName, $password);

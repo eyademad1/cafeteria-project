@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require_once __DIR__ . "/config/database.php";
 
 $page = $_GET['page'] ?? 'login';
