@@ -23,16 +23,27 @@
 $isLoggedIn = isset($_SESSION['user_id']);
 $role       = $_SESSION['role']  ?? '';
 $userName   = $_SESSION['name']  ?? '';
+$profilePic = $_SESSION['profile_pic'] ?? '';
 $isAdmin    = $role === 'admin';
+
+$page = $_GET['page'] ?? '';
+$isAuthPage = in_array($page, ['login', 'register', 'forget_password'], true);
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom <?= $isAuthPage ? 'py-2' : 'sticky-top' ?>">
     <div class="container">
 
         <!-- Brand -->
         <a class="navbar-brand fw-semibold" href="index.php?page=home">
             <i class="fas fa-mug-hot me-1" style="color:var(--cafe-gold, #c8813a);"></i> Cafeteria
         </a>
+
+        <?php if ($isAuthPage): ?>
+            <div class="ms-auto d-flex gap-2">
+                <a class="btn btn-sm btn-outline-secondary" href="index.php?page=login">Login</a>
+                <a class="btn btn-sm btn-cafe" href="index.php?page=register">Register</a>
+            </div>
+        <?php else: ?>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
                 aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,11 +80,11 @@ $isAdmin    = $role === 'admin';
                             <i class="fas fa-users fa-sm me-1 opacity-75"></i>Users
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="index.php?page=my-orders">
                             <i class="fas fa-bag-shopping fa-sm me-1 opacity-75"></i>My Orders
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=manual-order">
                             <i class="fas fa-pen-to-square fa-sm me-1 opacity-75"></i>Manual Order
@@ -121,7 +132,11 @@ $isAdmin    = $role === 'admin';
                 <?php if ($isLoggedIn): ?>
                     <!-- Name + role badge -->
                     <li class="nav-item d-flex align-items-center gap-2 me-2">
-                        <i class="fas fa-circle-user" style="color:#c8813a; font-size:1.1rem;"></i>
+                        <?php if ($profilePic): ?>
+                            <img src="public/images/users/<?= htmlspecialchars($profilePic) ?>" alt="Avatar" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
+                        <?php else: ?>
+                            <i class="fas fa-circle-user" style="color:#c8813a; font-size:1.1rem;"></i>
+                        <?php endif; ?>
                         <span class="nav-user-name small">
                             <?= htmlspecialchars($userName) ?>
                         </span>
@@ -150,6 +165,7 @@ $isAdmin    = $role === 'admin';
 
         </div>
     </div>
+    <?php endif; ?>
 </nav>
 
 <main class="container py-4">

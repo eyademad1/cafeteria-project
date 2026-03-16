@@ -140,9 +140,15 @@ function orderStatusBadgeClass($status) {
                                             $imgName = trim((string) ($item['product_image'] ?? ''));
                                             $imgSrc = $basePath . '/public/images/default-product.svg';
                                             if ($imgName !== '') {
-                                                $diskPath = __DIR__ . '/../../public/images/products/' . $imgName;
-                                                if (file_exists($diskPath)) {
-                                                    $imgSrc = $basePath . '/public/images/products/' . $imgName;
+                                                // Check if it's a full URL
+                                                if (filter_var($imgName, FILTER_VALIDATE_URL)) {
+                                                    $imgSrc = $imgName;
+                                                } else {
+                                                    // It's a local filename
+                                                    $diskPath = __DIR__ . '/../../public/images/products/' . $imgName;
+                                                    if (file_exists($diskPath)) {
+                                                        $imgSrc = $basePath . '/public/images/products/' . $imgName;
+                                                    }
                                                 }
                                             }
                                             $qty = (int) $item['quantity'];

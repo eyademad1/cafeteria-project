@@ -36,8 +36,26 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tr>
                     <td><?= $product['id'] ?></td>
                     <td>
-                        <?php if ($product['image']): ?>
-                            <img src="public/images/products/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="50">
+                        <?php
+                        $imageName = trim((string) ($product['image'] ?? ''));
+                        $imageSrc = '';
+                        if ($imageName !== '') {
+                            // Check if it's a full URL
+                            if (filter_var($imageName, FILTER_VALIDATE_URL)) {
+                                $imageSrc = $imageName;
+                            } else {
+                                // It's a local filename
+                                $productImageDisk = __DIR__ . '/../../public/images/products/' . $imageName;
+                                if (file_exists($productImageDisk)) {
+                                    $imageSrc = 'public/images/products/' . $imageName;
+                                } elseif (file_exists(__DIR__ . '/../../public/images/' . $imageName)) {
+                                    $imageSrc = 'public/images/' . $imageName;
+                                }
+                            }
+                        }
+                        ?>
+                        <?php if ($imageSrc): ?>
+                            <img src="<?= htmlspecialchars($imageSrc) ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="50" style="object-fit: cover;">
                         <?php else: ?>
                             No Image
                         <?php endif; ?>

@@ -72,7 +72,7 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="banner-details" id="banner-details">
                     </div>
                 </div>
-                <div class="product-grid" id="product-grid">
+                <div class="products-grid" id="product-grid">
                 <?php if(empty($products)):?>
                     <div class="empty-state">
                         <i class="fas fa-coffee"></i>
@@ -84,11 +84,17 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
                             $imageName = trim((string) ($product['image'] ?? ''));
                             $imageSrc = $basePath . '/public/images/default-product.svg';
                             if ($imageName !== '') {
-                                $productImageDisk = __DIR__ . '/../../public/images/products/' . $imageName;
-                                if (file_exists($productImageDisk)) {
-                                    $imageSrc = $basePath . '/public/images/products/' . $imageName;
-                                } elseif (file_exists($legacyImageDisk)) {
-                                    $imageSrc = $basePath . '/public/images/' . $imageName;
+                                // Check if it's a full URL
+                                if (filter_var($imageName, FILTER_VALIDATE_URL)) {
+                                    $imageSrc = $imageName;
+                                } else {
+                                    // It's a local filename
+                                    $productImageDisk = __DIR__ . '/../../public/images/products/' . $imageName;
+                                    if (file_exists($productImageDisk)) {
+                                        $imageSrc = $basePath . '/public/images/products/' . $imageName;
+                                    } elseif (file_exists(__DIR__ . '/../../public/images/' . $imageName)) {
+                                        $imageSrc = $basePath . '/public/images/' . $imageName;
+                                    }
                                 }
                             }
                         ?>

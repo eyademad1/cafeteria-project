@@ -72,53 +72,64 @@ switch ($page) {
         include __DIR__ . "/views/auth/forget_password.php";
         break;  
     case 'home':
-        include __DIR__ . "/views/user/home.php";
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+            include __DIR__ . "/views/admin/home.php";
+        } else {
+            include __DIR__ . "/views/user/home.php";
+        }
         break;
     case 'admin':
         include __DIR__ . "/views/admin/dashboard.php";
       case 'admin_products':
         include __DIR__ . "/views/admin/products/index.php";
         break;
-    case 'admin_products_add':
-        include __DIR__ . "/views/admin/products/add.php";
-        break;
-    case 'admin_products_edit':
-        include __DIR__ . "/views/admin/products/edit.php";
-        break;
-    case 'admin_categories':
-        include __DIR__ . "/views/admin/categories/index.php";
-        break;
-    case 'admin_categories_add':
-        include __DIR__ . "/views/admin/categories/add.php";
-        break;
-    case 'admin_categories_edit':
-        include __DIR__ . "/views/admin/categories/edit.php";
-        break;
-    case 'admin_add_category':
-        include __DIR__ . "/views/admin/products/add_category.php";
-        break;
-    case 'admin_rooms':
-        include __DIR__ . "/views/admin/rooms/index.php";
-        break;
-    case 'admin_rooms_add':
-        include __DIR__ . "/views/admin/rooms/add.php";
-        break;
-    case 'admin_rooms_edit':
-        include __DIR__ . "/views/admin/rooms/edit.php";
-        break;
-    case 'admin_users':
-        include __DIR__ . "/views/admin/users/index.php";
-        break;
-    case 'admin_users_add':
-        include __DIR__ . "/views/admin/users/add.php";
-        break;
-    case 'admin_users_edit':
-        include __DIR__ . "/views/admin/users/edit.php";
-        break;
-        break;   
-        case 'my-orders':
-        include __DIR__ . "/views/cart/myOrder.php";
-        break;    
+        case 'admin_products_add':
+            include __DIR__ . "/views/admin/products/add.php";
+            break;
+        case 'admin_products_edit':
+            include __DIR__ . "/views/admin/products/edit.php";
+            break;
+        case 'admin_categories':
+            include __DIR__ . "/views/admin/categories/index.php";
+            break;
+        case 'admin_categories_add':
+            include __DIR__ . "/views/admin/categories/add.php";
+            break;
+        case 'admin_categories_edit':
+            include __DIR__ . "/views/admin/categories/edit.php";
+            break;
+        case 'admin_add_category':
+            include __DIR__ . "/views/admin/products/add_category.php";
+            break;
+        case 'admin_rooms':
+            include __DIR__ . "/views/admin/rooms/index.php";
+            break;
+        case 'admin_rooms_add':
+            include __DIR__ . "/views/admin/rooms/add.php";
+            break;
+        case 'admin_rooms_edit':
+            include __DIR__ . "/views/admin/rooms/edit.php";
+            break;
+        case 'admin_users':
+            include __DIR__ . "/views/admin/users/index.php";
+            break;
+        case 'admin_users_add':
+            include __DIR__ . "/views/admin/users/add.php";
+            break;
+        case 'admin_users_edit':
+            include __DIR__ . "/views/admin/users/edit.php";
+            break;
+            break;   
+            case 'my-orders':
+            include __DIR__ . "/views/cart/myOrder.php";
+                break;    
+        case 'manual-order':
+            include __DIR__ . "/views/admin/manual_order.php";
+            break;
+    
+        case 'checks':
+            include __DIR__ . "/views/admin/checks.php";
+            break;
     default:
         include __DIR__ . "/views/auth/login.php";
 }

@@ -1,16 +1,17 @@
 footer {
-    background: #1a0a00;
-    color: #9e8672;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border-top: 1px solid #dee2e6;
 }
 
 footer a {
-    color: #9e8672;
+    color: #6c757d;
 }
 
 footer a:hover {
-    color: #c8813a;
+    color: var(--cafe-gold);
 }
 
 footer hr {
-    border-color: #3a2010;
+    border-color: #dee2e6;
 }

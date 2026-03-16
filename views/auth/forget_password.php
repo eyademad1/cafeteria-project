@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
 </div>
 
-<button class="btn w-100" style="background:#c8813a;color:#fff;">
+<button class="btn btn-cafe w-100">
 Reset Password
 </button>
 

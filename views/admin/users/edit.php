@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $profile_pic = $user['profile_pic'];
     if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/www/playground/cafeteria-project/public/images/users/';
+        $uploadDir = dirname(__DIR__, 2) . '/public/images/users/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }

@@ -1,5 +1,11 @@
 <?php
 $error = '';
+$success = '';
+
+// Show success message when redirected after registration
+if (isset($_GET['registered']) && $_GET['registered'] === '1') {
+    $success = 'Registration successful. Please login.';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -19,24 +25,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        // && password_verify($password, $user['password'])
+
         if ($user) {
+            $passwordMatches = false;
 
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['name']    = $user['name'];
-            $_SESSION['role']    = $user['role'];
-
-            if ($user['role'] === 'admin') {
-                header("Location: index.php?page=admin");
-            } else {
-                header("Location: index.php?page=home");
+            // Support both hashed passwords and legacy plain passwords
+            if (password_verify($password, $user['password'])) {
+                $passwordMatches = true;
+            } elseif ($password === $user['password']) {
+                $passwordMatches = true;
             }
 
-            exit;
+            if ($passwordMatches) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['name']    = $user['name'];
+                $_SESSION['role']    = $user['role'];
+                $_SESSION['profile_pic'] = $user['profile_pic'];
 
-        } else {
-            $error = "Invalid Email or Password";
+                if ($user['role'] === 'admin') {
+                    header("Location: index.php?page=admin");
+                } else {
+                    header("Location: index.php?page=home");
+                }
+
+                exit;
+            }
         }
+
+        $error = "Invalid Email or Password";
     }
 }
 ?>
@@ -44,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="row justify-content-center">
     <div class="col-md-4">
-        <h4 class="mb-4" style="color:#6b3a1f;">Login</h4>
+        <h4 class="mb-4 text-dark">Login</h4>
 
         <?php if ($error): ?>
             <div class="alert alert-danger"><?= $error ?></div>
@@ -57,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-3">
                 <input type="password" name="password" class="form-control" placeholder="Password" required>
             </div>
-            <button class="btn w-100" style="background:#c8813a; color:#fff;">Login</button>
+            <button class="btn btn-cafe w-100">Login</button>
         </form>
 
         <p class="text-center mt-2 small">
@@ -65,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
 
         <p class="text-center mt-3 small">
-            Don't have an account? <a href="index.php?page=register" style="color:#c8813a;">Register</a>
+            Don't have an account? <a href="index.php?page=register" class="text-cafe">Register</a>
         </p>
     </div>
 </div>

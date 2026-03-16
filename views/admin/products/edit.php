@@ -97,8 +97,26 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="mb-3">
                 <label class="form-label">Current Image</label>
-                <?php if ($product['image']): ?>
-                    <div><img src="public/images/products/<?= htmlspecialchars($product['image']) ?>" alt="Current" width="100"></div>
+                <?php
+                $imageName = trim((string) ($product['image'] ?? ''));
+                $imageSrc = '';
+                if ($imageName !== '') {
+                    // Check if it's a full URL
+                    if (filter_var($imageName, FILTER_VALIDATE_URL)) {
+                        $imageSrc = $imageName;
+                    } else {
+                        // It's a local filename
+                        $productImageDisk = __DIR__ . '/../../../public/images/products/' . $imageName;
+                        if (file_exists($productImageDisk)) {
+                            $imageSrc = 'public/images/products/' . $imageName;
+                        } elseif (file_exists(__DIR__ . '/../../../public/images/' . $imageName)) {
+                            $imageSrc = 'public/images/' . $imageName;
+                        }
+                    }
+                }
+                ?>
+                <?php if ($imageSrc): ?>
+                    <div><img src="<?= htmlspecialchars($imageSrc) ?>" alt="Current" width="100" style="object-fit: cover;"></div>
                 <?php else: ?>
                     <p>No image</p>
                 <?php endif; ?>
