@@ -19,6 +19,41 @@ $roomStmt->execute();
 $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+<style>
+    .product-image {
+        height: 160px;
+        overflow: hidden;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-price {
+        color: #000000 !important;
+        font-weight: 600;
+    }
+
+    .btn-add-to-cart {
+        transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-add-to-cart:hover {
+        background-color: #c0392b !important;
+        color: #ffffff !important;
+        transform: translateY(-1px);
+    }
+</style>
+
 <main class="main-content">
     <div class="page active" id="page-home">
         <div class="content-grid">
@@ -84,11 +119,9 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
                             $imageName = trim((string) ($product['image'] ?? ''));
                             $imageSrc = $basePath . '/public/images/default-product.svg';
                             if ($imageName !== '') {
-                                // Check if it's a full URL
                                 if (filter_var($imageName, FILTER_VALIDATE_URL)) {
                                     $imageSrc = $imageName;
                                 } else {
-                                    // It's a local filename
                                     $productImageDisk = __DIR__ . '/../../public/images/products/' . $imageName;
                                     if (file_exists($productImageDisk)) {
                                         $imageSrc = $basePath . '/public/images/products/' . $imageName;
@@ -104,15 +137,15 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                             <div class="product-info">
                                 <h3><?= htmlspecialchars($product['name']) ?></h3>
-                                <p class="product-price"><?= htmlspecialchars($product['price']) ?> EGP</p>
+                                <p class="product-price" style="color: #000000 !important; background: transparent !important; -webkit-text-fill-color: #000000 !important;"><?= htmlspecialchars($product['price']) ?> EGP</p>
                             </div>
-                            <button class="btn-add-to-cart ">
+                            <button class="btn-add-to-cart">
                                 <i class="fas fa-plus"></i> Add to Cart
                             </button>
                         </div>
                     <?php endforeach;?>
                 <?php endif;?>
-             
+                </div>
             </div>
         </div>
     </div>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $image = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = __DIR__ . '/../../../public/images/products/';
+        $uploadDir = dirname(_FILE_, 3) . '/public/images/products/';
         if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
             $errors[] = "Failed to create upload directory";
         } elseif (!is_writable($uploadDir)) {
